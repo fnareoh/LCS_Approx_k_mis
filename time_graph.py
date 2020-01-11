@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy import stats
 
-filenames = ["rand_10_1", "rand_10_1,5", "rand_10_2"]
+filenames = ["e_coli_10_1", "e_coli_10_1,5", "e_coli_10_2"]
 fig = plt.figure()
 plt.xlabel('Length')
 plt.ylabel('Time (s)')
@@ -49,4 +50,4 @@ plt.setp(line, label='Dynprog')
 plt.legend(loc='upper left')
     
 plt.show()    
-fig.savefig('figures/' + "rand_" + str(k) + '.png', dpi=fig.dpi, bbox_inches='tight')
+fig.savefig('figures/' + "e_coli_" + str(k) + '.png', dpi=fig.dpi, bbox_inches='tight')
