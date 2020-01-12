@@ -14,7 +14,7 @@ long long int LCSk_LSH_20q(int k, double eps,
     int r = n + 1;
     int nb_iter = 0;
 
-    while(r - l > 1 && nb_iter < ceil(16 * log2(n))){
+    while(r - l > 1 && nb_iter < ceil(log2(n))) { //ceil(16 * log2(n))){
         int m = std::ceil((l + r) / 2);
         nb_iter++;
         if (f(m, k, eps, S1, S2)) {
