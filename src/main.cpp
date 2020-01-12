@@ -32,7 +32,7 @@ void execute_and_update_time(std::string name, double & runtime, int & res,
 
 void compute_all(int k, double eps, std::function<std::vector<int>(int)> generate_string, std::string name_file, std::vector<int> list_length){
     std::ofstream outFile;
-    outFile.open("data/" + name_file + "_" + str(k) + "_" + str(eps) + ".csv");
+    outFile.open("data/" + name_file + "_" + std::to_string(k) + "_" + std::to_string(eps) + ".csv");
     if (outFile.is_open()) {
         std::vector<std::string> method_name{
             "dynprog",
