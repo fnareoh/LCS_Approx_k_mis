@@ -32,7 +32,7 @@ void execute_and_update_time(std::string name, double & runtime, int & res,
 
 void compute_all(int k, double eps, std::function<std::vector<int>(int)> generate_string, std::string name_file, std::vector<int> list_length){
     std::ofstream outFile;
-    outFile.open("data/" + name_file + ".csv");
+    outFile.open("data/" + name_file + "_" + str(k) + "_" + str(eps) + ".csv");
     if (outFile.is_open()) {
         std::vector<std::string> method_name{
             "dynprog",
@@ -93,7 +93,7 @@ void reg_e_coli_eval(int k, double eps, int maxlength, int step) {
     compute_all(k, eps, generate_string, "e_coli", list_length);
 }
 
-int main(int argc, char* argv[]) {
+/*int main(int argc, char* argv[]) {
     if (argc < 3) {
         std::cerr << "Usage: " << argv[0] << " k eps maxlength step alphabet" << std::endl;
         return 1;
@@ -102,10 +102,25 @@ int main(int argc, char* argv[]) {
     double eps = atof(argv[2]);  
     int maxlength = atoi(argv[3]);
     int step = atoi(argv[4]);
-    int alphabet = atoi(argv[5]);
+    int alphabet = atoi(argv[5]);*/
 
+int main() {
+    int k = 10;
+    int alphabet = 4;
+    int maxlength = 60000;
+    int step = 5000;
+
+    float eps = 1.0;
     reg_random_eval(k, eps, maxlength, step, alphabet);
-    //reg_e_coli_eval(k, eps, maxlength, step);
+    reg_e_coli_eval(k, eps, maxlength, step);
+
+    float eps = 1.5;
+    reg_random_eval(k, eps, maxlength, step, alphabet);
+    reg_e_coli_eval(k, eps, maxlength, step);
+
+    float eps = 2;
+    reg_random_eval(k, eps, maxlength, step, alphabet);
+    reg_e_coli_eval(k, eps, maxlength, step);
 
     return 0;
 }
