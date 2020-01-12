@@ -60,7 +60,7 @@ void compute_all(int k, double eps, std::function<std::vector<int>(int)> generat
                 std::vector<int> S1 = generate_string(list_length[i]);
                 std::vector<int> S2 = generate_string(list_length[i]);
 
-                outFile << k << "," << eps << "," << list_length[i] << "," << std::ceil(pow((double) list_length[i], (double) 1 / (1 + eps)) / log2(list_length[i]));
+                outFile << k << "," << eps << "," << list_length[i] << "," << 6;//std::ceil(pow((double) list_length[i], (double) 1 / (1 + eps)) / log2(list_length[i]));
                 for(auto const& name : method_name) {
                     execute_and_update_time(name, runtime, res, method_function[name], S1, S2);
                     outFile << "," << runtime;
@@ -118,7 +118,7 @@ int main() {
     reg_random_eval(k, eps, maxlength, step, alphabet);
     reg_e_coli_eval(k, eps, maxlength, step);
 
-    eps = 2;
+    eps = 2.0;
     reg_random_eval(k, eps, maxlength, step, alphabet);
     reg_e_coli_eval(k, eps, maxlength, step);
 
