@@ -50,7 +50,7 @@ bool LCSk_LSH_decision(int l, int k, double eps,
 
     int n = S1.size();
     
-    int L = std::ceil(pow((double) n, (double) 1 / (1+eps)) / log2(n));
+    int L = 6;//std::ceil(pow((double) n, (double) 1 / (1+eps)) / log2(n));
 
     double p2 = 1 - (1 + eps) * k / n;
     int m = std::ceil(log((double) 1 / n) / log(p2));
