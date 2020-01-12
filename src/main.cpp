@@ -114,11 +114,11 @@ int main() {
     reg_random_eval(k, eps, maxlength, step, alphabet);
     reg_e_coli_eval(k, eps, maxlength, step);
 
-    float eps = 1.5;
+    eps = 1.5;
     reg_random_eval(k, eps, maxlength, step, alphabet);
     reg_e_coli_eval(k, eps, maxlength, step);
 
-    float eps = 2;
+    eps = 2;
     reg_random_eval(k, eps, maxlength, step, alphabet);
     reg_e_coli_eval(k, eps, maxlength, step);
 
