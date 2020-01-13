@@ -16,6 +16,7 @@
 #include <string>
 #include <algorithm>
 #include <cassert>
+#include <ctime>
 
 /**
  * \brief   Random string generator.
