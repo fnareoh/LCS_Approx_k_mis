@@ -29,6 +29,7 @@ std::vector<int> filter_dna(){
 std::vector<int> e_coli_string(long long int l){
 	std::vector<int> dna = filter_dna();
     assert(dna.size()>=l);
+    std::srand(unsigned(std::time(0)));
     std::vector<int>::const_iterator first = dna.begin() + rand() % (dna.size()-l);
     std::vector<int>::const_iterator last =  first + l;
     std::vector<int> newVec(first, last);
