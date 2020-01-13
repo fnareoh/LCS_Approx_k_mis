@@ -7,6 +7,7 @@
 #include <iostream>
 #include <streambuf>
 #include <stdlib.h>
+#include<ctime>
 
 #include "20q.hpp"
 #include "dynprog.hpp"
