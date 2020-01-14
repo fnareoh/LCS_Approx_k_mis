@@ -18,14 +18,23 @@
 #include <cassert>
 #include <ctime>
 
+using namespace std;
+
 /**
  * \brief   Random string generator.
- * \param   length the length of a string to generate.
+ * \param   l the length of a string to generate.
  * \param   alphabet the size of the alphabet.
- * \param   S2 the second string (vector<int>).
- * \return  A string of length length, where each character is selected
+ * \param   index = {1,2}
+ * \return  A string of length l, where each character is selected
  * independently and uniformly at random from range.
  */
-std::vector<int> random_string(long long int length, int alphabet);
+std::vector<int> random_string(int l, int alphabet, int index);
 
-std::vector<int> e_coli_string(long long int l);
+/**
+ * \brief   Random string generator.
+ * \param   l the length of a string to generate.
+ * \param   index = {1,2}
+ * \return  A string of length l, selected at random from
+ * the E. coli genome.
+ */
+std::vector<int> e_coli_string(int l, int index);

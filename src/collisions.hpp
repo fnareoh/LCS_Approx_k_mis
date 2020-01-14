@@ -13,6 +13,8 @@
 
 #include "projections.hpp"
 
+using namespace std;
+
 /**
  * \brief   Computes the collisions of all l-length substrings of two strings.
  * \param   H the projection set.
@@ -20,5 +22,5 @@
  * \param   S2 the second string (vector<int>).
  * \return  The resulting collision set.
  */
-CollisionSet generate_collisions(ProjectionSet H, std::vector<int> const& S1, std::vector<int> const& S2);
+CollisionSet generate_collisions(ProjectionSet H, vector<int> const& S1, vector<int> const& S2);
 

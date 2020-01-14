@@ -8,6 +8,8 @@
 #include <vector>
 #include <queue>
 
+using namespace std;
+
 /**
  * \brief  Dynamic programming algorithm for computing
  * the longest common substring with k mismatches.
@@ -17,4 +19,4 @@
  * \return  The maximal length of a substring of S1 that occurs in S2
  * with at most k mismatches.
  */
-int dynprog(std::vector<int> const& S1, std::vector<int> const& S2, int k);
+int dynprog(vector<int> const& S1, vector<int> const& S2, int k);

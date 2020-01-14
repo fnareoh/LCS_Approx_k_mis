@@ -3,9 +3,9 @@
 Projection::Projection(int m, int n, int len) :
 n(n), l(len) {
     //Random initialization for uniform distribution
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(0, n-1);
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<> dis(0, n-1);
 
     //Choose the positions at random.
     for (int i = 0; i < m; i++){
@@ -15,13 +15,13 @@ n(n), l(len) {
         }
     }
 
-    std::sort(positions.begin(), positions.end());
+    sort(positions.begin(), positions.end());
     positions.erase(unique(positions.begin(), positions.end()), positions.end());
 }
 
 bool Projection::is_one_pos(long long int pos) {
     //Binary search on the positions (sorted).
-    long long int low = std::lower_bound(positions.begin(), positions.end(), pos) - positions.begin();
+    long long int low = lower_bound(positions.begin(), positions.end(), pos) - positions.begin();
     //Return if found or not.
     return (low < positions.size() && positions[low] == pos);
 }

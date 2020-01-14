@@ -13,6 +13,8 @@
 #include "projections.hpp"
 #include "collisions.hpp"
 
+using namespace std;
+
 /**
 * \brief Solves the decision variant of LCS_k.
 * \param  l the threshold length.
@@ -24,4 +26,4 @@
 * that the two are at distance less than (1+eps)*k, else false.
 */
 bool LCSk_LSH_decision(int l, int k, double eps,
-    std::vector<int> const&, std::vector<int> const&);
+    vector<int> const&, vector<int> const&);

@@ -11,6 +11,8 @@
 
 #include "decision.hpp"
 
+using namespace std;
+
 /**
 * \brief  Solves LCS with approximately k mismatches.
 * \param  k the max number of mismatches.
@@ -20,5 +22,4 @@
 * \return true if there is a substring of length l in S1 and S2 such
 * that the two are at distance less than (1+eps)*k, else false.
 */
-long long int LCSk_LSH(int k, double eps,
-    std::vector<int> const& S1, std::vector<int> const& S2);
+long long int LCSk_LSH(int k, double eps, vector<int> const& S1, vector<int> const& S2);

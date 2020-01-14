@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 
+using namespace std;
 
 /**
  * \brief  Represent a single projection.
@@ -29,7 +30,7 @@ class Projection {
     public:
         int n; ///< Length of the substring being projected.
         int l; ///< Length we limit ourselves to.
-        std::vector<int> positions; ///< vector of positions.
+        vector<int> positions; ///< vector of positions.
 
         /**
         * \brief  Create a projection.
@@ -87,8 +88,8 @@ class Collision {
 class CollisionSet {
 public:
 
-    std::vector<Collision> collisions; ///< The set of collisions.
-    std::vector<Collision> random_collision; ///< A random collision, normaly there shoud be at most one.
+    vector<Collision> collisions; ///< The set of collisions.
+    vector<Collision> random_collision; ///< A random collision, normaly there shoud be at most one.
 
     CollisionSet();
     void add_collision(Collision);
@@ -104,7 +105,7 @@ class ProjectionSet {
     public:
 
         int l; ///< range of the positions.
-        std::vector<Projection> projections; ///< set of projections
+        vector<Projection> projections; ///< set of projections
 
         /**
         * \brief  Create a projections set.
