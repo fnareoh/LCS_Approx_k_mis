@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-filename = 'rand_10_2'
+filename = 'e_coli_25_2.000000'
 csv_file = open('data/' + filename + '.csv', mode='r')
 data = np.genfromtxt(csv_file, delimiter=',')
 error = 0
@@ -16,11 +16,12 @@ for row in data[1:]:
 	else:
 		dictionary[int(row[2])] = [float(row[7]) / row[5]]
 
-print("k = %d, eps = %.2f" % (int(data[1][0]), data[1][1]))
+output = open('data/' + filename + '_err.csv', mode='w')
+output.write("k = %d, eps = %.2f\n" % (int(data[1][0]), data[1][1]))
 for key in dictionary:
-	print("%d \t %.2f \t %.2f" %(key, min(dictionary[key]), max(dictionary[key])))
+	output.write("%d \t %.2f \t %.2f\n" % (key, min(dictionary[key]), max(dictionary[key])))
 
-print("Error percentage: ", error / (np.size(data, 0) - 1))
+output.write("Error percentage: %.2f\n" % (error / (np.size(data, 0) - 1)))
 
 
 
