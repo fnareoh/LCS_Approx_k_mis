@@ -55,7 +55,7 @@ void retrieve(CollisionSet & C, size_t limit, int & nb_colisions,
 }
 
 CollisionSet generate_collisions(ProjectionSet H, vector<int> const& S1, vector<int> const& S2) {
-     const unsigned LIMIT_NTT = 1000; //hash length threshold
+     const unsigned LIMIT_NTT = 100; //hash length threshold
      assert(S1.size() == S2.size());
      assert(S1.size() == S2.size());
      int n = S1.size();
@@ -69,7 +69,7 @@ CollisionSet generate_collisions(ProjectionSet H, vector<int> const& S1, vector<
          vector<pair<int,unsigned>> fingerprint_S1;
          vector<pair<int,unsigned>> fingerprint_S2;
 
-         if ( h.positions.size() < LIMIT_NTT){
+         if (h.positions.size() < LIMIT_NTT){
            // Building the fingerprints naively
            for(int i = 0; i <= n - H.l; i++){
                fingerprint_S1.push_back(make_pair(i, (int) 0));
@@ -99,13 +99,13 @@ CollisionSet generate_collisions(ProjectionSet H, vector<int> const& S1, vector<
                 fingerprint_S1.push_back(make_pair(i, (int) conv_S1[i + H.l - 1]));
                 fingerprint_S2.push_back(make_pair(i, (int) conv_S2[i + H.l - 1]));
             }
-         }
-         // Sort the fingerprints
-         sort(fingerprint_S1.begin(), fingerprint_S1.end(), sortbysec);
-         sort(fingerprint_S2.begin(), fingerprint_S2.end(), sortbysec);
+        }
+        // Sort the fingerprints
+        sort(fingerprint_S1.begin(), fingerprint_S1.end(), sortbysec);
+        sort(fingerprint_S2.begin(), fingerprint_S2.end(), sortbysec);
 
-         // retrieve the CollisionSet
-         retrieve(C, limit, nb_colisions, n, h, fingerprint_S1, fingerprint_S2);
+        // retrieve the CollisionSet
+        retrieve(C, limit, nb_colisions, n, h, fingerprint_S1, fingerprint_S2);
      }
      return C;
  }

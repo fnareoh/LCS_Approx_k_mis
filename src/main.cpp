@@ -106,10 +106,10 @@ void e_coli_eval(int k, double eps, int maxlength, int step) {
     int alphabet = atoi(argv[5]);*/
 
 int main() {
-    int k = 10;
     int alphabet = 4;
     int maxlength = 60000;
     int step = 5000;
+    int k = 50;
 
     float eps = 1.0;
     random_eval(k, eps, maxlength, step, alphabet);

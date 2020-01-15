@@ -50,7 +50,7 @@ void fft(vector<unsigned> &a, int n, bool inverse=false) {
 }
 
 vector<unsigned> conv(vector<unsigned> A, vector<unsigned> B) {
-    //compute the convolution of A and B	
+    //compute the convolution of A and B
     int n = 31 - __builtin_clz(2 * (A.size() + B.size()) - 1);
     fft(A, n);
     fft(B, n);
