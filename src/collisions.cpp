@@ -68,15 +68,15 @@ CollisionSet generate_collisions(ProjectionSet H, vector<int> const& S1, vector<
      std::vector<unsigned> S2_u(S2.begin(),S2.end());
 
      for(Projection& h : H.projections){
-         // Building the fingerprints
+         // Building the fingerprints 
          vector<pair<int,unsigned>> fingerprint_S1;
          vector<pair<int,unsigned>> fingerprint_S2;
 
          if ( h.positions.size() < LIMIT_NTT){
            // Building the fingerprints naively
            for(int i = 0; i <= n - H.l; i++){
-               fingerprint_S1.push_back(make_pair(i,(int) 0));
-               fingerprint_S2.push_back(make_pair(i,(int) 0));
+               fingerprint_S1.push_back(make_pair(i, (int) 0));
+               fingerprint_S2.push_back(make_pair(i, (int) 0));
                unsigned power = 1;
                for (size_t j = 0; j < h.positions.size(); j++){
                    fingerprint_S1[i].second = fingerprint_S1[i].second + (S1[i + h.positions[j]] * power) % P;
@@ -84,24 +84,23 @@ CollisionSet generate_collisions(ProjectionSet H, vector<int> const& S1, vector<
                    power = ((long long unsigned) power * ROOT) % P;
                }
            }
-         }
-         else {
+         } else {
             // Building the fingerprints via NTT
             int r = 1;
-            std::vector<unsigned> r_h(H.l, 0);
+            vector<unsigned> r_h(H.l, 0);
             for(size_t p = 0;  p < h.positions.size(); p++) {
                 r_h[h.positions[p]] = r;
-                r = ((long long unsigned) r*ROOT )% P;
+                r = ((long long unsigned) r * ROOT) % P;
             }
-            std::reverse(r_h.begin(),r_h.end());
+            reverse(r_h.begin(),r_h.end()); 
+            vector<unsigned> S1_u(S1.begin(),S1.end());
+            vector<unsigned> S2_u(S2.begin(),S2.end());
+            vector<unsigned> kr_fp_S1 = conv(S1_u, r_h);
+            vector<unsigned> kr_fp_S2 = conv(S2_u, r_h);
 
-            //NTT
-            std::vector<unsigned> kr_fp_S1 = conv(S1_u, r_h);
-            std::vector<unsigned> kr_fp_S2 = conv(S2_u, r_h);
-
-            for (int i = 0; i <=  n-H.l; i++) {
-                fingerprint_S1.push_back(std::make_pair(i,(int) kr_fp_S1[i+H.l-1]));
-                fingerprint_S2.push_back(std::make_pair(i,(int) kr_fp_S2[i+H.l-1]));
+            for (int i = 0; i <=  n - H.l; i++) {
+                fingerprint_S1.push_back(make_pair(i, (int) kr_fp_S1[i + H.l - 1]));
+                fingerprint_S2.push_back(make_pair(i, (int) kr_fp_S2[i + H.l - 1]));
             }
          }
          // Sort the fingerprints
