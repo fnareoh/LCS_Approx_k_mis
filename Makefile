@@ -29,7 +29,7 @@ OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
 WARNINGS = $(SRC:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.w)
 
 # Executable name
-EXEC = approxkLCS
+EXEC = LCS_Approx_k_mis
 
 # ==================================================================================================
 # Configuration
