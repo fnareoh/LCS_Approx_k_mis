@@ -12,6 +12,7 @@
 #include <utility> 
 
 #include "projections.hpp"
+#include "NTT.hpp"
 
 using namespace std;
 
