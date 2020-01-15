@@ -2,9 +2,8 @@
 
 typedef unsigned long long ULL;
 
-const unsigned P = 2013265921; //15 * 2^27 + 1
+const unsigned P = 2013265921; //15*2^27+1
 const unsigned ROOT = 440564289; //root
-const int MN = 21; // must be < 27
 
 unsigned pw(unsigned x, unsigned n) {
     //raise x to the power n
@@ -18,11 +17,11 @@ unsigned pw(unsigned x, unsigned n) {
 }
 
 void fft(vector<unsigned> &a, int n, bool inverse=false) {
-    //apply the (direct/inverse) FFT transform to A
+    //(direct/inverse) FFT transform of A
     int N = 1 << n;
     a.insert(a.end(), N - a.size(), 0); //vector of size 2^n
     unsigned root = pw(ROOT, (1 << 27) / N * (inverse?(N - 1):1));
-    unsigned omega[1 << MN];
+    unsigned omega[1 << 21]; //the constant must be < 27
     omega[0] = 1;
     for(int i = 1; i < N - 1; i++) omega[i] = (ULL) omega[i - 1] * root % P;
     for(int i = 0; i < n; i++) {

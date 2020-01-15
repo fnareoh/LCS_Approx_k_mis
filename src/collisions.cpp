@@ -1,5 +1,8 @@
 #include "collisions.hpp"
 
+const unsigned P = 2013265921; //15*2^27+1
+const unsigned ROOT = 440564289; //root
+
 bool sortbysec(const pair<int,unsigned> &a, const pair<int,unsigned> &b) {
     if (a.second == b.second) return a.first < b.first;
     return (a.second < b.second);
@@ -51,11 +54,8 @@ void retrieve(CollisionSet & C, size_t limit, int & nb_colisions,
     }
 }
 
-const unsigned P = 2013265921; //15*2^27+1
-const unsigned ROOT = 440564289; //root
-const unsigned LIMIT_NTT = 1000; //Limit on when to use the NTT instead of naive
-
 CollisionSet generate_collisions(ProjectionSet H, vector<int> const& S1, vector<int> const& S2) {
+     const unsigned LIMIT_NTT = 1000; //hash length threshold
      assert(S1.size() == S2.size());
      assert(S1.size() == S2.size());
      int n = S1.size();
@@ -63,9 +63,6 @@ CollisionSet generate_collisions(ProjectionSet H, vector<int> const& S1, vector<
      CollisionSet C;
      int limit = 4 * n * H.projections.size();
      int nb_colisions = 0;
-
-     std::vector<unsigned> S1_u(S1.begin(),S1.end());
-     std::vector<unsigned> S2_u(S2.begin(),S2.end());
 
      for(Projection& h : H.projections){
          // Building the fingerprints 
@@ -93,14 +90,14 @@ CollisionSet generate_collisions(ProjectionSet H, vector<int> const& S1, vector<
                 r = ((long long unsigned) r * ROOT) % P;
             }
             reverse(r_h.begin(),r_h.end()); 
-            vector<unsigned> S1_u(S1.begin(),S1.end());
-            vector<unsigned> S2_u(S2.begin(),S2.end());
-            vector<unsigned> kr_fp_S1 = conv(S1_u, r_h);
-            vector<unsigned> kr_fp_S2 = conv(S2_u, r_h);
+            vector<unsigned> S1_u(S1.begin(), S1.end());
+            vector<unsigned> S2_u(S2.begin(), S2.end());
+            vector<unsigned> conv_S1 = conv(S1_u, r_h);
+            vector<unsigned> conv_S2 = conv(S2_u, r_h);
 
             for (int i = 0; i <=  n - H.l; i++) {
-                fingerprint_S1.push_back(make_pair(i, (int) kr_fp_S1[i + H.l - 1]));
-                fingerprint_S2.push_back(make_pair(i, (int) kr_fp_S2[i + H.l - 1]));
+                fingerprint_S1.push_back(make_pair(i, (int) conv_S1[i + H.l - 1]));
+                fingerprint_S2.push_back(make_pair(i, (int) conv_S2[i + H.l - 1]));
             }
          }
          // Sort the fingerprints
@@ -109,7 +106,7 @@ CollisionSet generate_collisions(ProjectionSet H, vector<int> const& S1, vector<
 
          // retrieve the CollisionSet
          retrieve(C, limit, nb_colisions, n, h, fingerprint_S1, fingerprint_S2);
-         }
+     }
      return C;
  }
 

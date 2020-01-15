@@ -6,7 +6,7 @@
 #pragma once
 
 #include <algorithm>
-#include<vector>
+#include <vector>
 
 using namespace std;
 
