@@ -55,7 +55,7 @@ void retrieve(CollisionSet & C, size_t limit, int & nb_colisions,
 }
 
 CollisionSet generate_collisions(ProjectionSet H, vector<int> const& S1, vector<int> const& S2) {
-     const unsigned LIMIT_NTT = 50; //hash length threshold
+     const unsigned LIMIT_NTT = 75; //hash length threshold
      assert(S1.size() == S2.size());
      assert(S1.size() == S2.size());
      int n = S1.size();
