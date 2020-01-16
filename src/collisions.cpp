@@ -8,20 +8,20 @@ bool sortbysec(const pair<int,unsigned> &a, const pair<int,unsigned> &b) {
     return (a.second < b.second);
 }
 
-void retrieve(CollisionSet & C, size_t limit, int & nb_colisions,
+void retrieve(CollisionSet & C, size_t sample_size, int & nb_collisions,
     int & n, Projection & h,
     vector<pair<int,unsigned>> const& fingerprint_S1,
     vector<pair<int,unsigned>> const& fingerprint_S2){
     size_t i = 0, j = 0;
     while (i < fingerprint_S1.size() && j < fingerprint_S2.size()) {
         if (fingerprint_S1[i].second == fingerprint_S2[j].second){
-            // Compute the number of collisions: x*y
-            int x = 0; int y = 0;
+            // Compute the number of collisions
+            int x = 0, y = 0;
             while (i + x < fingerprint_S1.size() && fingerprint_S1[i].second == fingerprint_S1[i + x].second) x++;
             while (j + y < fingerprint_S2.size() && fingerprint_S2[j].second == fingerprint_S2[j + y].second) y++;
-            // See if we update the random collisions
-            nb_colisions = nb_colisions + x * y;
-            float p = x * y / nb_colisions;
+            // Update the random collision via reservoir sampling
+            nb_collisions = nb_collisions + x * y;
+            float p = x * y / nb_collisions;
             float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
             if (r <= p) {
                 Collision c(
@@ -31,11 +31,11 @@ void retrieve(CollisionSet & C, size_t limit, int & nb_colisions,
                 if (C.random_collision.size() == 0) C.random_collision.push_back(c);
                 else C.random_collision[0] = c;
             }
-            if (C.collisions.size() < limit) {
+            if (C.collisions.size() < sample_size) {
                 size_t k = 0;
-                while (C.collisions.size() < limit && k < x){
+                while (C.collisions.size() < sample_size && k < x){
                     size_t m = 0;
-                    while (C.collisions.size() < limit && m < y){
+                    while (C.collisions.size() < sample_size && m < y){
                         Collision c(
                             fingerprint_S1[i + k].first,
                             fingerprint_S2[j + m].first + n,
@@ -55,21 +55,21 @@ void retrieve(CollisionSet & C, size_t limit, int & nb_colisions,
 }
 
 CollisionSet generate_collisions(ProjectionSet H, vector<int> const& S1, vector<int> const& S2) {
-     const unsigned LIMIT_NTT = 75; //hash length threshold
+     const unsigned THRESHOLD_NTT = 90; //hash length threshold
      assert(S1.size() == S2.size());
      assert(S1.size() == S2.size());
      int n = S1.size();
 
      CollisionSet C;
-     int limit = 4 * n * H.projections.size();
-     int nb_colisions = 0;
+     int sample_size = 4 * n * H.projections.size();
+     int nb_collisions = 0;
 
      for(Projection& h : H.projections){
          // Building the fingerprints 
          vector<pair<int,unsigned>> fingerprint_S1;
          vector<pair<int,unsigned>> fingerprint_S2;
 
-         if (h.positions.size() < LIMIT_NTT){
+         if (h.positions.size() < THRESHOLD_NTT){
            // Building the fingerprints naively
            for(int i = 0; i <= n - H.l; i++){
                fingerprint_S1.push_back(make_pair(i, (int) 0));
@@ -105,7 +105,7 @@ CollisionSet generate_collisions(ProjectionSet H, vector<int> const& S1, vector<
         sort(fingerprint_S2.begin(), fingerprint_S2.end(), sortbysec);
 
         // retrieve the CollisionSet
-        retrieve(C, limit, nb_colisions, n, h, fingerprint_S1, fingerprint_S2);
+        retrieve(C, sample_size, nb_collisions, n, h, fingerprint_S1, fingerprint_S2);
      }
      return C;
  }
