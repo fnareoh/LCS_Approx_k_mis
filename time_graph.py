@@ -1,8 +1,16 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import glob,os,sys
 from scipy import stats
 
-filenames = ["e_coli_10_1", "e_coli_10_1,5", "e_coli_10_2"]
+# usage : python time_graph.py <prefix of the files we want for the graph>
+# example : python time_graph.py random
+#           selects all the files in 'data/' starting by random, builds the 
+#           figure and saves it in 'figures/'
+to_compute = sys.argv[1]
+
+filenames = [ os.path.splitext(os.path.basename(name))[0]
+        for name in glob.glob('data/' + to_compute + '_*')]
 fig = plt.figure()
 plt.xlabel('Length')
 plt.ylabel('Time (s)')
@@ -50,4 +58,4 @@ plt.setp(line, label='Dynprog')
 plt.legend(loc='upper left')
     
 plt.show()    
-fig.savefig('figures/' + "e_coli_" + str(k) + '.png', dpi=fig.dpi, bbox_inches='tight')
+fig.savefig('figures/' + to_compute +"_" + str(k) + '.png', dpi=fig.dpi, bbox_inches='tight')
