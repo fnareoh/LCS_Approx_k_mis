@@ -21,14 +21,13 @@ bool hamming_distance_threshold(vector<int> const& S1, vector<int> const& S2, in
 bool test_colisions(CollisionSet C, int n, int l, int k, double eps,
     function<bool(int,double,
     int, int)> test_function) {
-    bool lcs_found = false;	
     if (C.random_collision.size() > 0){
         Collision c = C.random_collision[0];
         if (test_function(l, (1 + eps) * k, 
         c.first_string, 
         c.second_string - n))
         {
-	    lcs_found = true;	
+	    return true;	
         }
     }
     for (Collision& c : C.collisions) {
@@ -36,10 +35,10 @@ bool test_colisions(CollisionSet C, int n, int l, int k, double eps,
                         c.first_string,
                         c.second_string - n))
             {
-                lcs_found = true;		    
+	        return true;	    
             }
     }
-    return lcs_found;
+    return false;
 }
 
 bool LCSk_LSH_decision(int l, int k, double eps,
