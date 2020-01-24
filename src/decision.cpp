@@ -7,7 +7,7 @@ bool hamming_distance_threshold(vector<int> const& S1, vector<int> const& S2, in
     int j = s2;
     int res = 0;
     int mis = 0;
-    while ( res < l && i < S1.size() && j < S2.size() && mis <= mismatches){
+    while (res < l && i < S1.size() && j < S2.size() && mis <= mismatches){
         if ( S1[i] != S2[j] ){
             mis++;
         }
