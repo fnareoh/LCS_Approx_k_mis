@@ -17,7 +17,7 @@ int nb_rep(10);
 
 void execute_and_update_time(string name, double & runtime, int & res,
     function<int(vector<int> const& S1, vector<int> const& S2)> f,
-    vector<int> const& S1, std::vector<int> const& S2)
+    vector<int> const& S1, vector<int> const& S2)
 {
     chrono::steady_clock sc;
     auto start = sc.now();
@@ -27,13 +27,11 @@ void execute_and_update_time(string name, double & runtime, int & res,
     auto end = sc.now();
     auto time_span = static_cast<chrono::duration<double>> (end - start);
     runtime = time_span.count();
-
-    cout << name << " " << res << endl;
 }
 
 void compute_all(int k, double eps, function<vector<int>(int, int)> generate_string, string name_file, vector<int> list_length){
     ofstream outFile;
-    outFile.open("data/" + name_file + "_" + std::to_string(k) + "_" + std::to_string(eps) + ".csv");
+    outFile.open("data/" + name_file + "_" + to_string(k) + "_" + to_string(eps) + ".csv");
     if (outFile.is_open()) {
         vector<string> method_name{
             "dynprog",
@@ -42,7 +40,7 @@ void compute_all(int k, double eps, function<vector<int>(int, int)> generate_str
 
         map<string,function<int(vector<int> const& S1, vector<int> const& S2)>> method_function;
         method_function["dynprog"] = [k](vector<int> const& S1, vector<int> const& S2) -> int { return dynprog(S1, S2, k); };
-        method_function["LCSk-LSH"] = [k, eps](vector<int> const& S1, vector<int> const& S2) -> int { return LCSk_LSH(k, eps, S1, S2); };
+        method_function["LCSk-LSH"] = [k, eps](vector<int> const& S1, vector<int> const& S2) -> int { return LCSk_LSH_20q(k, eps, S1, S2); };
 
         outFile << "k,eps,length,L";
         for (auto const& name : method_name) {
@@ -55,9 +53,8 @@ void compute_all(int k, double eps, function<vector<int>(int, int)> generate_str
             double runtime(0);
             int res(0);
 
-            cout << "Starting " << list_length[i] << "." << endl;
+	    cout << "Starting k = " << k << ", eps = " << eps << ", length = " << list_length[i] << "." << endl;
             for (int j = 0; j < nb_rep; j++) {
-                cout << list_length[i] << ": Computation " <<  j << "..." << endl;
                 vector<int> S1 = generate_string(list_length[i], 1);
                 vector<int> S2 = generate_string(list_length[i], 2);
 
@@ -109,19 +106,15 @@ int main() {
     int alphabet = 4;
     int maxlength = 60000;
     int step = 5000;
-    int k = 50;
 
-    float eps = 1.0;
-    random_eval(k, eps, maxlength, step, alphabet);
-    e_coli_eval(k, eps, maxlength, step);
-
-    eps = 1.5;
-    random_eval(k, eps, maxlength, step, alphabet);
-    e_coli_eval(k, eps, maxlength, step);
-
-    eps = 2.0;
-    random_eval(k, eps, maxlength, step, alphabet);
-    e_coli_eval(k, eps, maxlength, step);
+    for (float eps = 1.0; eps <= 2.0; eps += 0.25) {
+    	random_eval(10, eps, maxlength, step, alphabet);
+    	e_coli_eval(10, eps, maxlength, step);
+    	random_eval(25, eps, maxlength, step, alphabet);
+    	e_coli_eval(25, eps, maxlength, step);
+    	random_eval(50, eps, maxlength, step, alphabet);
+    	e_coli_eval(50, eps, maxlength, step);
+    }
 
     return 0;
 }

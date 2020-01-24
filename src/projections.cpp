@@ -5,7 +5,7 @@ n(n), l(len) {
     //Random initialization for uniform distribution
     random_device rd;
     mt19937 gen(rd());
-    uniform_int_distribution<> dis(0, n-1);
+    uniform_int_distribution<> dis(0, n - 1);
 
     //Choose the positions at random.
     for (int i = 0; i < m; i++){

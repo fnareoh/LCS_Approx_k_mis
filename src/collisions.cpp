@@ -55,10 +55,8 @@ void retrieve(CollisionSet & C, size_t sample_size, int & nb_collisions,
 }
 
 CollisionSet generate_collisions(ProjectionSet H, vector<int> const& S1, vector<int> const& S2) {
-     const unsigned THRESHOLD_NTT = 90; //hash length threshold
-     assert(S1.size() == S2.size());
-     assert(S1.size() == S2.size());
      int n = S1.size();
+     const unsigned THRESHOLD_NTT = ceil(2 * log2(n)); //hash length threshold
 
      CollisionSet C;
      int sample_size = 4 * n * H.projections.size();

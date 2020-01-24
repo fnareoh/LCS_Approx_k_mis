@@ -5,16 +5,14 @@
 */
 #pragma once
 
-#include <iostream>
 #include <stack>
-#include <functional>
 
 #include "decision.hpp"
 
 using namespace std;
 
 /**
-* \brief  Solves LCS with approximately k mismatches.
+* \brief  Solves LCS with approximately k mismatches via the 20 questions game.
 * \param  k the max number of mismatches.
 * \param  1 + eps the approximation factor.
 * \param  S1 the first string.
@@ -22,4 +20,4 @@ using namespace std;
 * \return true if there is a substring of length l in S1 and S2 such
 * that the two are at distance less than (1+eps)*k, else false.
 */
-long long int LCSk_LSH(int k, double eps, vector<int> const& S1, vector<int> const& S2);
+long long int LCSk_LSH_20q(int k, double eps, vector<int> const& S1, vector<int> const& S2);
