@@ -1,13 +1,13 @@
 #include "decision.hpp"
 
 bool hamming_distance_threshold(vector<int> const& S1, vector<int> const& S2, int l,
-    double mismatches, int s1, int s2){
+    int k, int s1, int s2){
 
     int i = s1;
     int j = s2;
     int res = 0;
     int mis = 0;
-    while ( res < l && i < S1.size() && j < S2.size() && mis <= mismatches){
+    while (res < l && i < S1.size() && j < S2.size() && mis <= k){
         if ( S1[i] != S2[j] ){
             mis++;
         }
@@ -15,7 +15,7 @@ bool hamming_distance_threshold(vector<int> const& S1, vector<int> const& S2, in
         res++;
     }
 
-    return (mis <= mismatches && res >= l);
+    return (mis <= k && res >= l);
 }
 
 bool test_colisions(CollisionSet C, int n, int l, int k, double eps,
