@@ -7,17 +7,11 @@ CXX = g++
 # Compiler flags
 CFLAGS = -std=c++11 -O2 -g
 
-# Debuguer flags
-DFLAGS = -pg
+# Debugger flags
+#DFLAGS = -pg
 
 # Warning flags
 WFLAGS = -Wall -Wextra
-
-SDSLFLAGS1= -I/home/fnareoh/include -L/home/fnareoh/lib
-SDSLFLAGS2= -lsdsl -ldivsufsort -ldivsufsort64  -lboost_filesystem -lboost_system -fopenmp
-
-# Linker flags
-LFLAGS =
 
 # Source files
 SRC_DIR = src
@@ -35,7 +29,7 @@ OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
 WARNINGS = $(SRC:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.w)
 
 # Executable name
-EXEC = approxkLCS
+EXEC = LCS_Approx_k_mis
 
 # ==================================================================================================
 # Configuration
@@ -46,9 +40,6 @@ EXEC = approxkLCS
 # Main targets
 
 all: release
-
-plot: python/graph.py
-	python python/graph.py
 
 debug: DFLAGS += -ggdb
 debug: $(EXEC)
@@ -62,12 +53,12 @@ release: $(EXEC)
 
 # Build executable from object files
 $(EXEC): $(OBJ)
-	$(CXX) $(SDSLFLAGS1) -o $@ $^ $(DFLAGS) $(LFLAGS) $(SDSLFLAGS2)
+	$(CXX) -o $@ $^ $(DFLAGS) $(LFLAGS)
 
 # Build object file from source file
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(DEP_DIR)/%.d
 	@mkdir -p $(dir $@)
-	$(CXX) -o $@ -c $< $(CFLAGS) $(SDSLFLAGS1) $(DFLAGS) $(WFLAGS) $(SDSLFLAGS2)
+	$(CXX) -o $@ -c $< $(CFLAGS) $(DFLAGS) $(WFLAGS)
 
 # Create dependency files
 $(DEP_DIR)/%.d: $(SRC_DIR)/%.cpp
@@ -82,7 +73,7 @@ warnings: $(WARNINGS)
 # Output warnings
 $(BUILD_DIR)/%.w: $(SRC_DIR)/%.cpp
 	@mkdir -p $(dir $@)
-	$(CXX) $(SDSLFLAGS1) -c $< $(CFLAGS) $(WFLAGS) $(SDSLFLAGS2) 2> $@
+	$(CXX) -c $< $(CFLAGS) $(WFLAGS) 2> $@
 
 # ==================================================================================================
 # Clean intermediate files (not final results like executables, documentation, packages,...)
