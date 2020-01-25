@@ -3,17 +3,41 @@ import numpy as np
 import glob,os,sys
 from scipy import stats
 
-# usage : python time_graph.py <prefix of the files we want for the graph>
-# example : python time_graph.py random
+# usage : python time_graph.py <prefix of the files we want for the graph> <name of the figure>
+# example : python time_graph.py random random
 #           selects all the files in 'data/' starting by random, builds the 
-#           figure and saves it in 'figures/'
-to_compute = sys.argv[1]
+#           figure and saves it in 'figures/random.png'
+to_process = sys.argv[1]
+figure = sys.argv[2]
 
 filenames = [ os.path.splitext(os.path.basename(name))[0]
-        for name in glob.glob('data/' + to_compute + '_*')]
+        for name in glob.glob('data/' + to_process + '_*')]
+
+filenames = sorted(filenames)
+
 fig = plt.figure()
 plt.xlabel('Length')
 plt.ylabel('Time (s)')
+
+#Add a graph for Dynprog
+csv_file = open('data/' + filenames[0] + '.csv', mode='r')
+data = np.genfromtxt(csv_file, delimiter=',')
+n = int((np.size(data, 0) - 1) / 10)
+k = int(data[1][0])
+length = np.array([data[i * 10 + 1][2] for i in range(n)])
+time = np.array([np.mean(data[i * 10 + 1 : (i + 1) * 10, 4]) for i in range(n)])
+time_std = np.array([np.std(data[i * 10 + 1 : (i + 1) * 10, 4]) for i in range(n)])
+line,caps,bars = plt.errorbar(
+	length, 
+	time, 
+	time_std, 
+	fmt='o--',
+	markersize=5,
+	elinewidth=0.5,
+	capsize=2,    
+	capthick=0.5 
+	)
+plt.setp(line, label='Dynprog')
 
 #Add a graph for each epsilon
 for filename in filenames:
@@ -36,26 +60,6 @@ for filename in filenames:
 		)
 	plt.setp(line, label=r'$\varepsilon = $' + str(eps))
 
-#Add a graph for Dynprog
-csv_file = open('data/' + filenames[0] + '.csv', mode='r')
-data = np.genfromtxt(csv_file, delimiter=',')
-n = int((np.size(data, 0) - 1) / 10)
-k = int(data[1][0])
-length = np.array([data[i * 10 + 1][2] for i in range(n)])
-time = np.array([np.mean(data[i * 10 + 1 : (i + 1) * 10, 4]) for i in range(n)])
-time_std = np.array([np.std(data[i * 10 + 1 : (i + 1) * 10, 4]) for i in range(n)])
-line,caps,bars = plt.errorbar(
-	length, 
-	time, 
-	time_std, 
-	fmt='o--',
-	markersize=5,
-	elinewidth=0.5,
-	capsize=2,    
-	capthick=0.5 
-	)
-plt.setp(line, label='Dynprog')
-plt.legend(loc='upper left')
-    
+plt.legend(loc='upper left')    
 plt.show()    
-fig.savefig('figures/' + to_compute +"_" + str(k) + '.png', dpi=fig.dpi, bbox_inches='tight')
+fig.savefig('figures/' + figure + '.png', dpi=fig.dpi, bbox_inches='tight')
