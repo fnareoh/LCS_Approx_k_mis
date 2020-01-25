@@ -12,7 +12,7 @@ To install the repository:
 
 ```sh
 git clone git@github.com:fnareoh/LCS_Approx_k_mis.git
-cd kApproxLCS
+cd LCS_Approx_k_mis
 ```
 ```sh
 make all
