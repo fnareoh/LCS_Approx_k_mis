@@ -10,15 +10,15 @@ to_process = sys.argv[1]
 out = sys.argv[2]
 
 filenames = [ os.path.splitext(os.path.basename(name))[0]
-        for name in glob.glob('data/' + to_process + '_*')]
+        for name in glob.glob('../results/raw/' + to_process + '_*')]
         
 filenames = sorted(filenames)
 
-output = open('data/' + out + '.csv', mode='w')
+output = open('../results/error percentage/' + out + '.csv', mode='w')
 output.write('k, eps, min_factor, max_factor, error\n')
 
 for filename in filenames:
-	csv_file = open('data/' + filename + '.csv', mode='r')
+	csv_file = open('../results/raw/' + filename + '.csv', mode='r')
 	data = np.genfromtxt(csv_file, delimiter=',')
 	
 	error = 0

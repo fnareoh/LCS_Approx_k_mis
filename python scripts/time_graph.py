@@ -11,7 +11,7 @@ to_process = sys.argv[1]
 figure = sys.argv[2]
 
 filenames = [ os.path.splitext(os.path.basename(name))[0]
-        for name in glob.glob('data/' + to_process + '_*')]
+        for name in glob.glob('../results/raw/' + to_process + '_*')]
 
 filenames = sorted(filenames)
 
@@ -20,7 +20,7 @@ plt.xlabel('Length')
 plt.ylabel('Time (s)')
 
 #Add a graph for Dynprog
-csv_file = open('data/' + filenames[0] + '.csv', mode='r')
+csv_file = open('../results/raw/' + filenames[0] + '.csv', mode='r')
 data = np.genfromtxt(csv_file, delimiter=',')
 n = int((np.size(data, 0) - 1) / 10)
 k = int(data[1][0])
@@ -41,7 +41,7 @@ plt.setp(line, label='Dynprog')
 
 #Add a graph for each epsilon
 for filename in filenames:
-	csv_file = open('data/' + filename + '.csv', mode='r')
+	csv_file = open("../results/raw/" + filename + ".csv", mode='r')
 	data = np.genfromtxt(csv_file, delimiter=',')
 	n = int((np.size(data, 0) - 1) / 10)
 	eps = data[1][1]
@@ -62,4 +62,4 @@ for filename in filenames:
 
 plt.legend(loc='upper left')    
 plt.show()    
-fig.savefig('figures/' + figure + '.png', dpi=fig.dpi, bbox_inches='tight')
+fig.savefig("../results/time graphs/" + figure + ".png", dpi=fig.dpi, bbox_inches='tight')
