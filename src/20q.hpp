@@ -12,7 +12,7 @@
 using namespace std;
 
 /**
-* \brief  Solves LCS with approximately k mismatches via the 20 questions game.
+* \brief  Solves LCS with approximately k mismatches via the Twenty Questions game.
 * \param  k the max number of mismatches.
 * \param  1 + eps the approximation factor.
 * \param  S1 the first string.

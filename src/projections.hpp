@@ -27,25 +27,18 @@ using namespace std;
  *   and decide whether we project onto a given position.
  */
 class Projection {
-    public:
-        int n; ///< Length of the substring being projected.
-        int l; ///< Length we limit ourselves to.
-        vector<int> positions; ///< vector of positions.
+public:
+    int n; ///< Length of the substring being projected.
+    int l; ///< Length we limit ourselves to.
+    vector<int> positions; ///< vector of positions.
 
-        /**
-        * \brief  Create a projection.
-        * \param  m the number of positions we project onto.
-        * \param  n the range of positions.
-        * \param  len the range among which the positions will be saved.
-        */
-        Projection(int m, int n,  int len);
-
-        /**
-        * \brief  Tests whether we project onto a given position.
-        * \param  pos the position to be tested.
-        * \return true is we project onto pos, else false.
-        */
-        bool is_one_pos(long long int pos);
+    /**
+    * \brief  Create a projection.
+    * \param  m the number of positions we project onto.
+    * \param  n the range of positions.
+    * \param  len the range among which the positions will be saved.
+    */
+    Projection(int m, int n, int len);
 };
 
 /**
@@ -60,26 +53,26 @@ class Projection {
  *   substrings in S1, S2 and a reference to the projection.
  */
 class Collision {
-    public:
-        long long int first_string; ///< starting position of the substring in S1.
-        long long int second_string; ///< starting position of the substring in S2.
-        Projection & h;  ///< projection for which the two substring collide.
+public:
+    int first_string; ///< starting position of the substring in S1.
+    int second_string; ///< starting position of the substring in S2.
+    Projection &h;  ///< projection for which the two substrings collide.
 
-        /**
-        * \brief  Create a collision.
-        * \param  i the starting position of the substring in S1.
-        * \param  j the starting position of the substring in S2.
-        * \param  h the projection.
-        */
-        Collision(long long int i, long long int j, Projection & h);
-        Collision & operator = (const Collision& other);
+    /**
+    * \brief  Create a collision.
+    * \param  i the starting position of the substring in S1.
+    * \param  j the starting position of the substring in S2.
+    * \param  h the projection.
+    */
+    Collision(int i, int j, Projection &h);
+    Collision& operator = (const Collision &other);
 };
 
 /**
  * \brief  Represent a set of collisions.
  *
  * \section Role
- *   Represent a set of collisons, is initialized as empty and collisions can be
+ *   Represent a set of collisions, is initialized as empty and collisions can be
  *   added, a single random_collision is also stored.
  *
  * \section Behaviour
@@ -87,7 +80,6 @@ class Collision {
  */
 class CollisionSet {
 public:
-
     vector<Collision> collisions; ///< The set of collisions.
     vector<Collision> random_collision; ///< A random collision, normaly there shoud be at most one.
 
@@ -102,18 +94,16 @@ public:
  *   Is initialized by creating L projections of m positions between 0 and len.
  */
 class ProjectionSet {
-    public:
+public:
+    int l; ///< range of the positions.
+    vector<Projection> projections; ///< set of projections
 
-        int l; ///< range of the positions.
-        vector<Projection> projections; ///< set of projections
-
-        /**
-        * \brief  Create a projections set.
-        * \param  L the number of projections.
-        * \param  m the number of positions we project onto.
-        * \param  n the range of positions.
-        * \param  len the range among which the positions will be saved.
-        */
-        ProjectionSet(int L, int m, int n, int len);
-
+    /**
+    * \brief  Create a projections set.
+    * \param  L the number of projections.
+    * \param  m the number of positions we project onto.
+    * \param  n the range of positions.
+    * \param  len the range among which the positions will be saved.
+    */
+    ProjectionSet(int L, int m, int n, int len);
 };

@@ -24,4 +24,3 @@ using namespace std;
  * \return  The resulting collision set.
  */
 CollisionSet generate_collisions(ProjectionSet H, vector<int> const& S1, vector<int> const& S2);
-

@@ -1,20 +1,22 @@
 #include "20q.hpp"
 
+const int TWENTY_QUESTIONS_FACTOR = 2;
+
 long long int LCSk_LSH_20q(int k, double eps,
     vector<int> const& S1, vector<int> const& S2) {
     assert(S1.size() == S2.size());
     int n = S1.size();
 
-    stack<pair<int,int>> trusted;
+    stack<pair<int, int>> trusted;
     int max_yes = 0;
-    trusted.push(make_pair(0, n + 1));
+    trusted.push(make_pair(0, n));
     int l = 0;
-    int r = n + 1;
+    int r = n;
     int nb_iter = 0;
 
-    while(r - l > 1 && nb_iter < ceil(2 * log2(n))) {
-        int m = ceil((l + r) / 2);
-        nb_iter++;
+    while (r - l > 0 && nb_iter < ceil(TWENTY_QUESTIONS_FACTOR * log2(n))) {
+        int m = (l + r + 1) / 2;
+        ++nb_iter;
         if (LCSk_LSH_decision(m, k, eps, S1, S2)) {
             max_yes = max(max_yes, m);
             if (LCSk_LSH_decision(r, k, eps, S1, S2)) {
@@ -27,7 +29,7 @@ long long int LCSk_LSH_20q(int k, double eps,
         }
         else {
             if (LCSk_LSH_decision(l, k, eps, S1, S2)) {
-                trusted.push(make_pair(l, m));
+                trusted.push(make_pair(l, m - 1));
             }
             else {
                 //incoherence: remove the last interval
@@ -39,5 +41,3 @@ long long int LCSk_LSH_20q(int k, double eps,
     }
     return max_yes;
 }
-
-
