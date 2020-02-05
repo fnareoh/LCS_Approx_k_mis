@@ -1,5 +1,7 @@
 #include "20q.hpp"
+#include "ukkonen.hpp"
 
+const int USE_LCS_HEURISTIC = true;
 const int TWENTY_QUESTIONS_FACTOR = 2;
 
 long long int LCSk_LSH_20q(int k, double eps,
@@ -7,19 +9,36 @@ long long int LCSk_LSH_20q(int k, double eps,
     assert(S1.size() == S2.size());
     int n = S1.size();
 
-    stack<pair<int, int>> trusted;
-    int max_yes = 0;
-    trusted.push(make_pair(0, n));
-    int l = 0;
-    int r = n;
-    int nb_iter = 0;
+    SuffixTree ST;
+    if (USE_SUFFIX_TREE) {
+        vector<int> S;
+        for (int i = 0; i < n; ++i) S.push_back(S1[i]);
+        S.push_back(-2);
+        for (int i = 0; i < n; ++i) S.push_back(S2[i]);
+        S.push_back(-1);
+        ST.Create_suffix_tree(&S, S.size());
+        ST.Compute_suffix_arrays();
+    }
 
-    while (r - l > 0 && nb_iter < ceil(TWENTY_QUESTIONS_FACTOR * log2(n))) {
+    stack<pair<int, int>> trusted;
+    int max_yes = 0, l, r;
+    if (USE_SUFFIX_TREE && USE_LCS_HEURISTIC) {
+        int lcs = ST.LCS(n, 2 * n + 1);
+        l = lcs + k;
+        r = min(n, (k + 1) * lcs + k);
+    } else {
+        l = 0; r = n;
+    }
+    trusted.push(make_pair(l, r));
+    int nb_iter = 0;
+    int steps = ceil(TWENTY_QUESTIONS_FACTOR * log2(r - l));
+
+    while (r - l > 0 && nb_iter < steps) {
         int m = (l + r + 1) / 2;
         ++nb_iter;
-        if (LCSk_LSH_decision(m, k, eps, S1, S2)) {
+        if (LCSk_LSH_decision(m, k, eps, S1, S2, ST)) {
             max_yes = max(max_yes, m);
-            if (LCSk_LSH_decision(r, k, eps, S1, S2)) {
+            if (LCSk_LSH_decision(r, k, eps, S1, S2, ST)) {
                 //incoherence: remove the last interval
                 if (trusted.size() != 1) trusted.pop();
             }
@@ -28,7 +47,7 @@ long long int LCSk_LSH_20q(int k, double eps,
             }
         }
         else {
-            if (LCSk_LSH_decision(l, k, eps, S1, S2)) {
+            if (LCSk_LSH_decision(l, k, eps, S1, S2, ST)) {
                 trusted.push(make_pair(l, m - 1));
             }
             else {
@@ -38,6 +57,9 @@ long long int LCSk_LSH_20q(int k, double eps,
         }
         l = trusted.top().first;
         r = trusted.top().second;
+    }
+    if (USE_SUFFIX_TREE) {
+        ST.Delete_suffix_tree();
     }
     return max_yes;
 }

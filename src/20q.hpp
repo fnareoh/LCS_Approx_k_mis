@@ -6,6 +6,7 @@
 #pragma once
 
 #include <stack>
+#include <cassert>
 
 #include "decision.hpp"
 
