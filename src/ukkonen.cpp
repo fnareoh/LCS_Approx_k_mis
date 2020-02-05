@@ -138,6 +138,6 @@ int SuffixTree::LCE(int i, int j) {
   if (i == j) return n - i;
   int i1 = RANK[i], j1 = RANK[j];
   if (i1 > j1) swap(i1, j1);
-  int level = 31 - __builtin_clz(j1 - i1);
+  int level = 8 * sizeof(int) - 1 - __builtin_clz(j1 - i1);
   return min(DBF[level][i1], DBF[level][j1 - (1 << level)]);
 }
