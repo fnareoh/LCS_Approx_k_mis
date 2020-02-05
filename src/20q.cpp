@@ -24,7 +24,7 @@ long long int LCSk_LSH_20q(int k, double eps,
     int max_yes = 0, l, r;
     if (USE_SUFFIX_TREE && USE_LCS_HEURISTIC) {
         int lcs = ST.LCS(n, 2 * n + 1);
-        l = lcs + k;
+        max_yes = l = lcs + k;
         r = min(n, (k + 1) * lcs + k);
     } else {
         l = 0; r = n;
