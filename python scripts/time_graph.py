@@ -37,7 +37,7 @@ line,caps,bars = plt.errorbar(
 	capsize=2,    
 	capthick=0.5 
 	)
-plt.setp(line, label='Dynprog')
+plt.setp(line, label='FGKU')
 
 #Add a graph for each epsilon
 for filename in filenames:
