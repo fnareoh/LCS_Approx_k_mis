@@ -8,7 +8,7 @@ inline bool hamming_dist_threshold(int l, int k, int s1, int s2,
     int n = S1.size();
     int res = 0;
     int mis = 0;
-    if (false) {
+    if (USE_SUFFIX_TREE && 8 * k <= l) {
         while (res < l && mis < k) {
             res += ST.LCE(s1 + res, n + 1 + s2 + res) + 1;
             ++mis;
