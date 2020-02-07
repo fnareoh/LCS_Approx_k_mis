@@ -1,6 +1,7 @@
 #include "decision.hpp"
 
 const double L_FACTOR = 1./16.;
+const int KANGAROO_FACTOR = 4;
 
 inline bool hamming_dist_threshold(int l, int k, int s1, int s2,
     vector<int> const& S1, vector<int> const& S2,
@@ -8,7 +9,7 @@ inline bool hamming_dist_threshold(int l, int k, int s1, int s2,
     int n = S1.size();
     int res = 0;
     int mis = 0;
-    if (USE_SUFFIX_TREE && 8 * k <= l) {
+    if (USE_SUFFIX_TREE && KANGAROO_FACTOR * k <= l) {
         while (res < l && mis < k) {
             res += ST.LCE(s1 + res, n + 1 + s2 + res) + 1;
             ++mis;
