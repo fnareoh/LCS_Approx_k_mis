@@ -1,7 +1,7 @@
 #include "decision.hpp"
 
 const double L_FACTOR = 1./16.;
-const int KANGAROO_FACTOR = 4;
+const int KANGAROO_FACTOR = 8;
 
 inline bool hamming_dist_threshold(int l, int k, int s1, int s2,
     vector<int> const& S1, vector<int> const& S2,

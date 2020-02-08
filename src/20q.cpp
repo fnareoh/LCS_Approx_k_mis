@@ -2,7 +2,7 @@
 #include "ukkonen.hpp"
 
 const int USE_LCS_HEURISTIC = true;
-const int TWENTY_QUESTIONS_FACTOR = 3;
+const int TWENTY_QUESTIONS_FACTOR = 2;
 
 long long int LCSk_LSH_20q(int k, double eps,
     vector<int> const& S1, vector<int> const& S2) {

@@ -30,7 +30,7 @@ void execute_and_update_time(string name, double &runtime, int &res,
 
 void compute_all(int k, double eps, function<vector<int>(int, int)> generate_string, string name_file, vector<int> list_length) {
     ofstream outFile;
-    outFile.open("data/" + name_file + "_" + to_string(k) + "_" + to_string(eps) + ".csv");
+    outFile.open("results/raw/" + name_file + "_" + to_string(k) + "_" + to_string(eps) + ".csv");
     if (outFile.is_open()) {
         vector<string> method_name{
             "dynprog",
@@ -89,16 +89,6 @@ void e_coli_eval(int k, double eps, int maxlength, int step) {
     compute_all(k, eps, generate_string, "e_coli", list_length);
 }
 
-/*int main(int argc, char* argv[]) {
-    if (argc < 3) {
-        std::cerr << "Usage: " << argv[0] << " k eps maxlength step alphabet" << std::endl;
-        return 1;
-    }
-    int k = atoi(argv[1]);
-    double eps = atof(argv[2]);  
-    int maxlength = atoi(argv[3]);
-    int step = atoi(argv[4]);
-    int alphabet = atoi(argv[5]);*/
 
 int main() {
     int alphabet = 4;
