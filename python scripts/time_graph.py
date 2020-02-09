@@ -4,9 +4,9 @@ import glob,os,sys
 from scipy import stats
 
 # usage : python time_graph.py <prefix of the files we want for the graph> <name of the figure>
-# example : python time_graph.py random random
-#           selects all the files in 'data/' starting by random, builds the 
-#           figure and saves it in 'figures/random.png'
+# example : python time_graph.py random_10 random_10
+#           selects all the files in 'results/raw/' starting with random_10, builds the 
+#           figure and saves it in 'results/time graphs/random_10.png'
 to_process = sys.argv[1]
 figure = sys.argv[2]
 
