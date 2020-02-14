@@ -21,7 +21,7 @@ using namespace std;
  *   projected.
  *
  * \section Behaviour
- *   A projection is a vector of position (long long int) and an integer l, the
+ *   A projection is a vector of position and an integer l, the
  *   length of the substring you project.
  *   Methods: construct, evaluate a projection on a string
  *   and decide whether we project onto a given position.
